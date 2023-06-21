@@ -1,26 +1,32 @@
 <?php
-/*Interfejs użytkownika zawiera dwa rodzaje kontrolek wprowadzania danych: TextInput, który
-akceptuje wszystkie teksty oraz NumericInput, który akceptuje tylko cyfry.
-Zaimplementuj klasę TextInput, która zawiera:
-Metodę publiczną add($text) - dodającą podany tekst do bieżącej wartości.
-Metodę publiczną getValue() - zwracającą bieżącą wartość (string).
-Zaimplementuj klasę NumericInput, która: Dziedziczy po TextInput. Przedefiniowuje metodę add tak,
-aby każdy tekst nienumeryczny był ignorowany*/
+class TextInput
+{
+	protected $value = '';
 
-
-
-class TextInput {
-	public function add($text) {
-		
+	public function add($text)
+	{
+		$this->value .= $text;
 	}
-	public function getValue() {
 
+	public function getValue()
+	{
+		return $this->value;
 	}
 }
-
-class NumericInput extends TextInput {
-
+class NumericInput extends TextInput
+{
+	public function add($text)
+	{
+		if (is_numeric($text)) {
+			$this->value .= $text;
+		}
+	}
 }
+$input = new TextInput();
+$input->add("Dzień Dobry PHP");
+echo $input->getValue();
 
-
+$input2 = new NumericInput();
+$input2->add('12345');
+echo $input2->getValue();
 ?>
